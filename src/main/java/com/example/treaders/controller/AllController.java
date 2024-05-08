@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 @Controller
@@ -26,6 +27,8 @@ public class AllController {
     @PostMapping("/home")
     public String authenticate(@RequestParam String username, @RequestParam String password, Model model){
         if(jdbcClientRepository.authenticate(username, password)){
+            List<String> videoPaths = jdbcClientRepository.getAllVideoPath();
+            model.addAttribute("videoNames", videoPaths);
             model.addAttribute("username", username);
             return "welcome";
         }else{
@@ -41,6 +44,10 @@ public class AllController {
     @PostMapping("/newuser")
     public String addNewUser(@RequestParam String username, @RequestParam String password){
         jdbcClientRepository.addUser(username, password);
+        return "redirect:/";
+    }
+    @PostMapping("/logout")
+    public String logout(){
         return "redirect:/";
     }
 }

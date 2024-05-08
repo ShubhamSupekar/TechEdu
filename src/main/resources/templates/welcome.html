@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>Home</title>
+    <style>
+        /* Style for logout button */
+        .logout-button {
+            background-color: #f44336; /* Red */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Add some margin to create a gap between the logout button and videos */
+        .logout-button-container {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 
 <h1>Home Page</h1>
 
 <h2>Welcome user <span th:text="${username}">first name</span></h2>
+
+<!-- Logout button -->
+<div class="logout-button-container">
+    <form action="/logout" method="post">
+        <button type="submit" class="logout-button">Logout</button>
+    </form>
+</div>
+
+<!-- Iterate over the list of video names -->
+<div th:each="videoName : ${videoNames}">
+    <div>
+        <video width="560" height="315" controls>
+            <!-- Set the source of the video to the relative path of the video -->
+            <source th:src="@{'/videos/' + ${videoName}}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</div>
 
 </body>
 </html>

@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class JdbcClientRepository {
     private static final Logger log = LoggerFactory.getLogger(JdbcClientRepository.class);
@@ -28,5 +30,10 @@ public class JdbcClientRepository {
     public void addUser(String username, String password) {
         String sql = "INSERT INTO user (username, password) VALUES (?, ?)";
         jdbcTemplate.update(sql, username, password);
+    }
+
+    public List<String> getAllVideoPath() {
+        String sql = "SELECT file_path FROM videos";
+        return jdbcTemplate.queryForList(sql,String.class);
     }
 }
