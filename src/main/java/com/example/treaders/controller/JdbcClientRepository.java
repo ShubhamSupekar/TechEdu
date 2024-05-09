@@ -1,5 +1,6 @@
 package com.example.treaders.controller;
 
+import com.example.treaders.videoFormat.VideoFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,8 +33,12 @@ public class JdbcClientRepository {
         jdbcTemplate.update(sql, username, password);
     }
 
-    public List<String> getAllVideoPath() {
-        String sql = "SELECT file_path FROM videos";
-        return jdbcTemplate.queryForList(sql,String.class);
+    public List<VideoFormat> getAllVideoPath() {
+        String sql = "SELECT title, description, file_path FROM videos";
+        return jdbcTemplate.query(sql,(vs,rowNum) -> new  VideoFormat(
+                vs.getString("title"),
+                vs.getString("description"),
+                vs.getString("file_path")
+        ));
     }
 }

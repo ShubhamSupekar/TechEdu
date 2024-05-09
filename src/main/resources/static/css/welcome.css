@@ -30,3 +30,11 @@
     width: 100%;
     height: auto;
 }
+
+.video-item h3 {
+    margin-top: 0;
+}
+
+.video-item p {
+    margin-bottom: 10px;
+}

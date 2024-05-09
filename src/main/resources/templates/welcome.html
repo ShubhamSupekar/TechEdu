@@ -20,12 +20,14 @@
 
 <!-- Grid layout for videos -->
 <div class="video-grid">
-    <!-- Iterate over the list of video names -->
-    <div th:each="videoName : ${videoNames}">
+    <!-- Iterate over the list of videos -->
+    <div th:each="video : ${videos}">
         <div class="video-item">
+            <h3 th:text="${video.title}"></h3> <!-- Video Name -->
+            <p th:text="${video.decription}"></p> <!-- Video Description -->
             <video width="280" height="auto" controls>
                 <!-- Set the source of the video to the relative path of the video -->
-                <source th:src="@{'/videos/' + ${videoName}}" type="video/mp4">
+                <source th:src="@{'/videos/' + ${video.filename}}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>

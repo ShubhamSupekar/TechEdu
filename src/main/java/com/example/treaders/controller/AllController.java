@@ -1,5 +1,6 @@
 package com.example.treaders.controller;
 
+import com.example.treaders.videoFormat.VideoFormat;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +28,8 @@ public class AllController {
     @PostMapping("/home")
     public String authenticate(@RequestParam String username, @RequestParam String password, Model model){
         if(jdbcClientRepository.authenticate(username, password)){
-            List<String> videoPaths = jdbcClientRepository.getAllVideoPath();
-            model.addAttribute("videoNames", videoPaths);
+            List<VideoFormat> videos = jdbcClientRepository.getAllVideoPath();
+            model.addAttribute("videos", videos);
             model.addAttribute("username", username);
             return "welcome";
         }else{
