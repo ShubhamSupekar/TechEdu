@@ -9,13 +9,13 @@
 
 <h1>Home Page</h1>
 
-<h2>Welcome user <span th:text="${username}">first name</span></h2>
-
-<!-- Logout button -->
-<div class="logout-button-container">
-    <form action="/logout" method="post">
-        <button type="submit" class="logout-button">Logout</button>
-    </form>
+<div class="user-dropdown">
+    <button class="dropbtn">Welcome, <span th:text="${username}">first name</span></button>
+    <div class="dropdown-content">
+        <form action="/logout" method="post">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
 </div>
 
 <!-- Grid layout for videos -->

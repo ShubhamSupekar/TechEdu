@@ -1,5 +1,11 @@
-/* Style for logout button */
-.logout-button {
+/* Style for user dropdown container */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style for the dropdown button */
+.dropbtn {
     background-color: #f44336; /* Red */
     color: white;
     padding: 10px 20px;
@@ -8,10 +14,50 @@
     cursor: pointer;
 }
 
-/* Add some margin to create a gap between the logout button and videos */
-.logout-button-container {
-    margin-bottom: 20px;
+/* Style for the dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 }
+
+/* Show the dropdown content when the user clicks on the dropdown button */
+.user-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Style for the logout button */
+.logout-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Style for welcome message */
+.welcome-message {
+    font-size: 18px;
+    margin-bottom: 20px; /* Add margin at the bottom to create space */
+}
+
+/* Add margin at the top of the video grid */
+.video-grid {
+    margin-top: 20px; /* Add margin at the top */
+}
+
+
+/* Change color of logout button on hover */
+.logout-button:hover {
+    background-color: #45a049;
+}
+
 
 /* Grid layout for videos */
 .video-grid {
@@ -31,10 +77,19 @@
     height: auto;
 }
 
+/* Increase font size for video titles */
 .video-item h3 {
     margin-top: 0;
+    font-size: 24px; /* Increase font size */
+    margin-bottom: 10px; /* Add margin below the title */
 }
 
+/* Add a horizontal line below video titles */
+.video-item hr {
+    margin: 20px 0; /* Add margin above and below the line */
+}
+
+/* Add margin above video descriptions */
 .video-item p {
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
