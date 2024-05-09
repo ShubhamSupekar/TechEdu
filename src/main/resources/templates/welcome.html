@@ -18,14 +18,17 @@
     </form>
 </div>
 
-<!-- Iterate over the list of video names -->
-<div th:each="videoName : ${videoNames}">
-    <div>
-        <video width="560" height="315" controls>
-            <!-- Set the source of the video to the relative path of the video -->
-            <source th:src="@{'/videos/' + ${videoName}}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+<!-- Grid layout for videos -->
+<div class="video-grid">
+    <!-- Iterate over the list of video names -->
+    <div th:each="videoName : ${videoNames}">
+        <div class="video-item">
+            <video width="280" height="auto" controls>
+                <!-- Set the source of the video to the relative path of the video -->
+                <source th:src="@{'/videos/' + ${videoName}}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
     </div>
 </div>
 

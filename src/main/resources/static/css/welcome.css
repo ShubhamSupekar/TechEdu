@@ -12,3 +12,21 @@
 .logout-button-container {
     margin-bottom: 20px;
 }
+
+/* Grid layout for videos */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-gap: 20px;
+}
+
+.video-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.video-item video {
+    width: 100%;
+    height: auto;
+}
