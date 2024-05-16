@@ -1,7 +1,9 @@
 package com.example.treaders.controller;
 
 import com.example.treaders.InputForm;
+import com.example.treaders.LlamaService;
 import com.example.treaders.videoFormat.VideoFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,8 @@ import java.util.List;
 @Controller
 public class AllController {
     private final JdbcClientRepository jdbcClientRepository;
+    @Autowired
+    private LlamaService llamaService;
 
     public AllController(JdbcClientRepository jdbcClientRepository) {
         this.jdbcClientRepository = jdbcClientRepository;
@@ -58,7 +62,11 @@ public class AllController {
     }
 
     @PostMapping("/chat")
-    public String processString(InputForm inputForm) {
+    public String processString(InputForm inputForm,Model model) {
+        String userInput = inputForm.getInputString();
+        String llamaResponse = llamaService.getResponse(userInput); // Get the response from Llama
+        inputForm.setResponseString(llamaResponse); // Set the response in the inputForm
+        model.addAttribute("inputForm", inputForm); // Update the model with the inputForm containing the response
         return "ChatPage";
     }
 
