@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <link rel="stylesheet" type="text/css" href="/css/ChatPage.css">
+</head>
+<body>
+<div class="container">
+    <h1>Ask anything to Llama</h1>
+    <form action="#" th:action="@{/chat}" th:object="${inputForm}" method="post" class="input-container">
+        <input type="text" th:field="*{inputString}" />
+        <button type="submit">Submit</button>
+    </form>
+
+    <div th:if="${inputForm.inputString != null}" class="output-container">
+        <p class="output-text" th:text="${inputForm.inputString}"></p>
+    </div>
+</div>
+</body>
+</html>

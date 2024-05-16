@@ -41,6 +41,23 @@
     cursor: pointer;
 }
 
+/* Style for the chat button */
+.chat-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-color: #008CBA; /* Blue */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Change color of chat button on hover */
+.chat-button:hover {
+    background-color: #005f6b; /* Darker Blue */
+}
+
 /* Style for welcome message */
 .welcome-message {
     font-size: 18px;

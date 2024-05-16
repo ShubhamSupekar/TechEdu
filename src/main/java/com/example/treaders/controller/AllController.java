@@ -1,14 +1,13 @@
 package com.example.treaders.controller;
 
+import com.example.treaders.InputForm;
 import com.example.treaders.videoFormat.VideoFormat;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -51,4 +50,16 @@ public class AllController {
     public String logout(){
         return "redirect:/";
     }
+
+    @GetMapping("/chat")
+    public String index(Model model) {
+        model.addAttribute("inputForm", new InputForm());
+        return "ChatPage";
+    }
+
+    @PostMapping("/chat")
+    public String processString(InputForm inputForm) {
+        return "ChatPage";
+    }
+
 }
