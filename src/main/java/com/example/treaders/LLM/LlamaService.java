@@ -1,4 +1,4 @@
-package com.example.treaders;
+package com.example.treaders.LLM;
 
 import org.springframework.ai.ollama.OllamaChatClient;
 import org.springframework.stereotype.Service;

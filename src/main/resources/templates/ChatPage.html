@@ -8,13 +8,14 @@
 <body>
 <div class="container">
     <h1>Ask anything to Llama</h1>
+
     <form action="#" th:action="@{/chat}" th:object="${inputForm}" method="post" class="input-container">
-        <input type="text" th:field="*{inputString}" />
+        <input type="text" th:field="*{inputString}" placeholder="Type your question here..." />
         <button type="submit">Submit</button>
     </form>
 
     <div th:if="${inputForm.responseString != null}" class="output-container">
-        <p class="output-text" th:text="${inputForm.responseString}"></p>
+        <div class="output-text" th:text="${inputForm.responseString}"></div>
     </div>
 </div>
 </body>

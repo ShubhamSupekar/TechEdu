@@ -1,7 +1,7 @@
 package com.example.treaders.controller;
 
-import com.example.treaders.InputForm;
-import com.example.treaders.LlamaService;
+import com.example.treaders.user.InputForm;
+import com.example.treaders.LLM.LlamaService;
 import com.example.treaders.videoFormat.VideoFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
