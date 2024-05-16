@@ -25,6 +25,7 @@
         <div class="video-item">
             <h3 th:text="${video.title}"></h3> <!-- Video Name -->
             <p th:text="${video.decription}"></p> <!-- Video Description -->
+            <p>Uploaded by: <span th:text="${video.username}" style="font-style: italic; font-weight: bold;"></span></p><!-- uploaded by  -->
             <video width="280" height="auto" controls>
                 <!-- Set the source of the video to the relative path of the video -->
                 <source th:src="@{'/videos/' + ${video.filename}}" type="video/mp4">

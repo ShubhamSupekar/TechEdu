@@ -9,6 +9,8 @@ public record VideoFormat(
         @NonNull
         String decription,
         @NonNull
-        String filename
+        String filename,
+        @NonNull
+        String username
 ) {
 }

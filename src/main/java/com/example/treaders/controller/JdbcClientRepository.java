@@ -34,11 +34,14 @@ public class JdbcClientRepository {
     }
 
     public List<VideoFormat> getAllVideoPath() {
-        String sql = "SELECT title, description, file_path FROM videos";
+        String sql = "SELECT v.title, v.description, v.file_path, u.username " +
+                "FROM videos v " +
+                "INNER JOIN user u ON v.uploaded_by = u.id";
         return jdbcTemplate.query(sql,(vs,rowNum) -> new  VideoFormat(
                 vs.getString("title"),
                 vs.getString("description"),
-                vs.getString("file_path")
+                vs.getString("file_path"),
+                vs.getString("username")
         ));
     }
 }
