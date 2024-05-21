@@ -1,12 +1,15 @@
-/* Style for user dropdown container */
-.user-dropdown {
-    position: relative;
-    display: inline-block;
+/* Set background color to black and text color to white */
+body {
+    background-color: #000;
+    color: #fff; /* Set text color to white */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 /* Style for the dropdown button */
 .dropbtn {
-    background-color: #f44336; /* Red */
+    background-color: #0084ff; /* Blue */
     color: white;
     padding: 10px 20px;
     border: none;
@@ -18,13 +21,13 @@
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: #1f1f1f;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
-/* Show the dropdown content when the user clicks on the dropdown button */
+/* Show the dropdown content when the user hovers over the dropdown button */
 .user-dropdown:hover .dropdown-content {
     display: block;
 }
@@ -35,7 +38,7 @@
     width: 100%;
     padding: 10px;
     text-align: center;
-    background-color: #4CAF50; /* Green */
+    background-color: #ff6347; /* Red */
     color: white;
     border: none;
     cursor: pointer;
@@ -47,7 +50,7 @@
     width: 100%;
     padding: 10px;
     text-align: center;
-    background-color: #008CBA; /* Blue */
+    background-color: #4caf50; /* Green */
     color: white;
     border: none;
     cursor: pointer;
@@ -55,58 +58,46 @@
 
 /* Change color of chat button on hover */
 .chat-button:hover {
-    background-color: #005f6b; /* Darker Blue */
+    background-color: #45a049; /* Darker Green */
 }
 
 /* Style for welcome message */
-.welcome-message {
-    font-size: 18px;
-    margin-bottom: 20px; /* Add margin at the bottom to create space */
+h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
 }
-
-/* Add margin at the top of the video grid */
-.video-grid {
-    margin-top: 20px; /* Add margin at the top */
-}
-
-
-/* Change color of logout button on hover */
-.logout-button:hover {
-    background-color: #45a049;
-}
-
 
 /* Grid layout for videos */
 .video-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     grid-gap: 20px;
+    padding: 20px;
 }
 
+/* Style for individual video items */
 .video-item {
-    border: 1px solid #ccc;
+    border: 1px solid #333;
     border-radius: 5px;
-    overflow: hidden;
+    padding: 15px;
+    background-color: #1a1a1a; /* Slightly lighter black for video item background */
 }
 
-.video-item video {
-    width: 100%;
-    height: auto;
-}
-
-/* Increase font size for video titles */
+/* Style for video titles */
 .video-item h3 {
-    margin-top: 0;
-    font-size: 24px; /* Increase font size */
-    margin-bottom: 10px; /* Add margin below the title */
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #fff; /* White text */
 }
 
-/* Add a horizontal line below video titles */
-.video-item hr {
-    margin: 20px 0; /* Add margin above and below the line */
-}
-
-/* Add margin above video descriptions */
+/* Style for video descriptions */
 .video-item p {
     margin-top: 10px;
+    color: #ccc; /* Light grey text */
+}
+
+/* Style for uploaded by text */
+.video-item p span {
+    color: #fff; /* White text for uploader name */
 }

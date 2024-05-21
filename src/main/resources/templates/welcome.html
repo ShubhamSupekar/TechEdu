@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<h1>Home Page</h1>
+<h1>TechEdu</h1>
 
 <div class="user-dropdown">
     <button class="dropbtn">Welcome, <span th:text="${username}">first name</span></button>
@@ -15,27 +15,26 @@
         <form action="/logout" method="post">
             <button type="submit" class="logout-button">Logout</button>
         </form>
-        <!-- Add a form with a button to navigate to "/idx" page -->
+        <!-- Add a form with a button to navigate to "/chat" page -->
         <form action="/chat" method="get">
             <button type="submit" class="chat-button">Chat With Llama3</button>
         </form>
     </div>
 </div>
 
-
 <!-- Grid layout for videos -->
 <div class="video-grid">
     <!-- Iterate over the list of videos -->
     <div th:each="video : ${videos}">
         <div class="video-item">
-            <h3 th:text="${video.title}"></h3> <!-- Video Name -->
-            <p th:text="${video.decription}"></p> <!-- Video Description -->
-            <p>Uploaded by: <span th:text="${video.username}" style="font-style: italic; font-weight: bold;"></span></p><!-- uploaded by  -->
+            <h3 th:text="${video.title}"></h3> <!-- Video Title -->
             <video width="280" height="auto" controls>
                 <!-- Set the source of the video to the relative path of the video -->
-                <source th:src="@{'/videos/' + ${video.filename}}" type="video/mp4">
+                <source th:src="@{'/Videos/' + ${video.filename}}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
+            <p th:text="${video.decription}"></p> <!-- Video Description -->
+            <p>Uploaded by: <span th:text="${video.username}" style="font-style: italic; font-weight: bold;"></span></p><!-- Uploaded by -->
         </div>
     </div>
 </div>

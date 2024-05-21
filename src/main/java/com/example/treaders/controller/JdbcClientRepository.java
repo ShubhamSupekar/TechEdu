@@ -44,4 +44,20 @@ public class JdbcClientRepository {
                 vs.getString("username")
         ));
     }
+
+    public void saveVideoIntoDatabase(String title, String description, String filePath, String username) {
+        // First, query the user table to find the id of the user
+        String getUserIdSql = "SELECT id FROM user WHERE username = ?";
+        Integer userId = jdbcTemplate.queryForObject(getUserIdSql, Integer.class, username);
+
+        if (userId != null) {
+            // If userId is not null (user found), proceed to insert the video details
+            String sql = "INSERT INTO videos (title, description, file_path, uploaded_by) VALUES (?, ?, ?, ?)";
+            jdbcTemplate.update(sql, title, description, filePath, userId);
+        } else {
+            // Handle the case where the user is not found
+            throw new RuntimeException("User not found for username: " + username);
+        }
+    }
+
 }

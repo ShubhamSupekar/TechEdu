@@ -9,7 +9,10 @@
 <div class="container">
     <h1>Ask anything to Llama</h1>
 
-    <form action="#" th:action="@{/chat}" th:object="${inputForm}" method="post" class="input-container">
+    <!-- Loading screen -->
+    <div class="loading-screen" id="loadingScreen">Loading...</div>
+
+    <form action="#" th:action="@{/chat}" th:object="${inputForm}" method="post" class="input-container" onsubmit="showLoadingScreen()">
         <input type="text" th:field="*{inputString}" placeholder="Type your question here..." />
         <button type="submit">Submit</button>
     </form>
@@ -17,6 +20,16 @@
     <div th:if="${inputForm.responseString != null}" class="output-container">
         <div class="output-text" th:text="${inputForm.responseString}"></div>
     </div>
+
+    <!-- Home button -->
+    <a href="/home" class="home-button">Home</a>
 </div>
+
+<script>
+    function showLoadingScreen() {
+        document.getElementById("loadingScreen").style.display = "block"; // Show the loading screen
+    }
+</script>
+
 </body>
 </html>
