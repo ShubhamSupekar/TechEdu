@@ -30,7 +30,7 @@ public class VideoService {
 
     private String saveVideoFile(MultipartFile file) throws IOException {
         // Directory where videos will be saved
-        String uploadDir = "/Videos/";
+        String uploadDir = "D:\\Study\\Projects\\Videos\\";
 
         // Create the directory if it doesn't exist
         Path uploadPath = Paths.get(uploadDir);
@@ -43,7 +43,7 @@ public class VideoService {
         Path filePath = uploadPath.resolve(fileName);
         Files.write(filePath, file.getBytes());
 
-        // Return the file path where the file is saved
+        // Return the file name
         return fileName;
     }
 }
