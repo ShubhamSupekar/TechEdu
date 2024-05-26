@@ -1,6 +1,6 @@
 package com.example.treaders.videoFormat;
 
-import com.example.treaders.controller.JdbcClientRepository;
+import com.example.treaders.DataBaseConnection.JdbcClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +30,7 @@ public class VideoService {
 
     private String saveVideoFile(MultipartFile file) throws IOException {
         // Directory where videos will be saved
-        String uploadDir = "D:\\Study\\Projects\\Videos\\";
+        String uploadDir = "/static/Videos/";
 
         // Create the directory if it doesn't exist
         Path uploadPath = Paths.get(uploadDir);

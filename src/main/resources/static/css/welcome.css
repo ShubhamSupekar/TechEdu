@@ -61,6 +61,21 @@ body {
     background-color: #45a049; /* Darker Green */
 }
 
+.upload-button{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-color: #ff63;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.upload-button:hover{
+    background-color: #45a049;
+}
+
 /* Style for welcome message */
 h1 {
     font-size: 24px;

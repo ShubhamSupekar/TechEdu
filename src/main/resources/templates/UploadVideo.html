@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Video Upload</title>
+    <link rel="stylesheet" href="/css/UploadVideo.css">
 </head>
 <body>
 
@@ -19,6 +20,11 @@
     <input type="file" id="file" name="file" accept="video/*" required>
 
     <button type="submit">Upload</button>
+    <p class="file-size-info">Max size = 30MB allowed</p>
+</form>
+
+<form action="/home" method="get">
+    <button type="submit" class="home-button">Home</button>
 </form>
 
 </body>
