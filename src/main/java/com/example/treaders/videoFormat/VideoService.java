@@ -30,7 +30,7 @@ public class VideoService {
 
     private String saveVideoFile(MultipartFile file) throws IOException {
         // Directory where videos will be saved
-        String uploadDir = "/static/Videos/";
+        String uploadDir = "public/Videos/";
 
         // Create the directory if it doesn't exist
         Path uploadPath = Paths.get(uploadDir);
