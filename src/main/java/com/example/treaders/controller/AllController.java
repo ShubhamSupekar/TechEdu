@@ -22,7 +22,7 @@ public class AllController {
     private final JdbcClientRepository jdbcClientRepository;
     @Autowired
     private LlamaService llamaService;
-    private boolean UserLoiggedIn = false;
+    private boolean UserLoggedIn = false;
     private String UserName;
     @Autowired
     private VideoService videoService;
@@ -38,7 +38,7 @@ public class AllController {
 
     @GetMapping("/home")
     public String home(Model model){
-        if(UserLoiggedIn){
+        if(UserLoggedIn){
             List<VideoFormat> videos = jdbcClientRepository.getAllVideoPath();
             model.addAttribute("videos", videos);
             model.addAttribute("username", UserName);
@@ -54,7 +54,7 @@ public class AllController {
             model.addAttribute("videos", videos);
             model.addAttribute("username", username);
             UserName=username;
-            UserLoiggedIn = true;
+            UserLoggedIn = true;
             return "welcome";
         }else{
             return "redirect:/signup";
@@ -73,14 +73,14 @@ public class AllController {
     }
     @PostMapping("/logout")
     public String logout(){
-        UserLoiggedIn = false;
+        UserLoggedIn = false;
         UserName = "";
         return "redirect:/";
     }
 
     @GetMapping("/chat")
     public String index(Model model) {
-        if(!UserLoiggedIn){
+        if(!UserLoggedIn){
             return "redirect:/";
         }
         model.addAttribute("inputForm", new InputForm());
@@ -98,7 +98,7 @@ public class AllController {
 
     @GetMapping("/upload")
     public String getUploadVideoFormat(){
-        if(!UserLoiggedIn){
+        if(!UserLoggedIn){
             return "redirect:/";
         }
         return "UploadVideo";
