@@ -76,6 +76,17 @@ body {
     background-color: #45a049;
 }
 
+.view-video-button{
+    display: block;
+    width: 95%;
+    padding: 5px;
+    text-align: center;
+    background-color: #ff63;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
 /* Style for welcome message */
 h1 {
     font-size: 24px;

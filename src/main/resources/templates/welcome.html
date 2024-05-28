@@ -38,6 +38,7 @@
             </video>
             <p th:text="${video.decription}"></p> <!-- Video Description -->
             <p>Uploaded by: <span th:text="${video.username}" style="font-style: italic; font-weight: bold;"></span></p><!-- Uploaded by -->
+            <a th:href="@{'/Videos/' + ${video.filename}}" class="view-video-button">View Video</a>
         </div>
     </div>
 </div>
