@@ -24,3 +24,13 @@ UPDATE videos SET uploaded_by = 2 WHERE id = 9;
 DELETE FROM videos WHERE id = 23;
 
 DELETE FROM videos ORDER BY id ASC LIMIT 3;
+
+delete from user where id = 3;
+
+
+ALTER TABLE videos
+DROP COLUMN filepath;
+
+
+ALTER TABLE videos
+CHANGE COLUMN file_path filepath VARCHAR(255);

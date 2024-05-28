@@ -1,10 +1,11 @@
 package com.example.treaders.controller;
 
-import com.example.treaders.DataBaseConnection.JdbcClientRepository;
+import com.example.treaders.models.VideoFormat;
+import com.example.treaders.models.UserFormat;
+import com.example.treaders.services.VideoRepository;
 import com.example.treaders.user.InputForm;
 import com.example.treaders.LLM.LlamaService;
-import com.example.treaders.videoFormat.VideoFormat;
-import com.example.treaders.videoFormat.VideoService;
+import com.example.treaders.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import com.example.treaders.services.UserRepository;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,17 +21,23 @@ import java.util.List;
 
 @Controller
 public class AllController {
-    private final JdbcClientRepository jdbcClientRepository;
+
+    @Autowired
+    private UserRepository UserRepo;
+
+    @Autowired
+    private VideoRepository VideoRepo;
+
     @Autowired
     private LlamaService llamaService;
+
     private boolean UserLoggedIn = false;
+
     private String UserName;
+
     @Autowired
     private VideoService videoService;
 
-    public AllController(JdbcClientRepository jdbcClientRepository) {
-        this.jdbcClientRepository = jdbcClientRepository;
-    }
 
     @GetMapping("/")
     public String Login(){
@@ -39,7 +47,7 @@ public class AllController {
     @GetMapping("/home")
     public String home(Model model){
         if(UserLoggedIn){
-            List<VideoFormat> videos = jdbcClientRepository.getAllVideoPath();
+            List<VideoFormat> videos = VideoRepo.findAll();
             model.addAttribute("videos", videos);
             model.addAttribute("username", UserName);
             return "welcome";
@@ -49,8 +57,9 @@ public class AllController {
 
     @PostMapping("/home")
     public String authenticate(@RequestParam String username, @RequestParam String password, Model model){
-        if(jdbcClientRepository.authenticate(username, password)){
-            List<VideoFormat> videos = jdbcClientRepository.getAllVideoPath();
+        UserFormat user = UserRepo.findByUsername(username);
+        if(user!=null && user.getPassword().equals(password)){
+            List<VideoFormat> videos = VideoRepo.findAll();
             model.addAttribute("videos", videos);
             model.addAttribute("username", username);
             UserName=username;
@@ -68,9 +77,14 @@ public class AllController {
 
     @PostMapping("/newuser")
     public String addNewUser(@RequestParam String username, @RequestParam String password){
-        jdbcClientRepository.addUser(username, password);
+        UserFormat user=new UserFormat();
+        user.setUsername(username);
+        user.setPassword(password);
+        UserRepo.save(user);
         return "redirect:/";
     }
+
+
     @PostMapping("/logout")
     public String logout(){
         UserLoggedIn = false;
