@@ -44,6 +44,19 @@ public class AllController {
         return "login";
     }
 
+
+    @PostMapping("/authenticate")
+    public String authenticate(@RequestParam String username, @RequestParam String password){
+        UserFormat user = UserRepo.findByUsername(username);
+        if(user!=null && user.getPassword().equals(password)){
+            UserLoggedIn = true;
+            UserName = username;
+            return "redirect:/home";
+        }else{
+            return "redirect:/signup";
+        }
+    }
+
     @GetMapping("/home")
     public String home(Model model){
         if(UserLoggedIn){
@@ -53,21 +66,6 @@ public class AllController {
             return "welcome";
         }
         return "redirect:/";
-    }
-
-    @PostMapping("/home")
-    public String authenticate(@RequestParam String username, @RequestParam String password, Model model){
-        UserFormat user = UserRepo.findByUsername(username);
-        if(user!=null && user.getPassword().equals(password)){
-            List<VideoFormat> videos = VideoRepo.findAll();
-            model.addAttribute("videos", videos);
-            model.addAttribute("username", username);
-            UserName=username;
-            UserLoggedIn = true;
-            return "welcome";
-        }else{
-            return "redirect:/signup";
-        }
     }
 
     @GetMapping("/signup")
