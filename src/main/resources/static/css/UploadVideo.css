@@ -80,8 +80,9 @@ button:hover {
 
 .cancel-button{
     display: block;
-    width: 100%;
+    width: 95%;
     padding: 10px;
+    text-align: center;
     background-color: #5a9;
     color: #fff;
     border: none;

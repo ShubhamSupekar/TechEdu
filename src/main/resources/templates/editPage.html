@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Video</title>
-    <link rel="stylesheet" href="/css/UploadVideo.css">
+    <link rel="stylesheet" type="text/css" href="/css/editForm.css">
 </head>
 <body>
 
@@ -28,10 +28,7 @@
 
     <button type="submit">Update</button>
     <p class="file-size-info">Max size = 30MB allowed</p>
-</form>
-
-<form th:action="@{/home}" method="get">
-    <button type="submit" class="cancel-button">Cancel</button>
+    <a class="cancel-button" th:href="@{'/home'}">Cancel</a>
 </form>
 
 </body>

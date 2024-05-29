@@ -7,9 +7,9 @@
 </head>
 <body>
 
-<h2>Upload Video</h2>
-
 <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+    <h2>Upload Video</h2>
+
     <label for="title">Title:</label>
     <input type="text" id="title" name="title" required>
 
@@ -21,11 +21,7 @@
 
     <button type="submit">Upload</button>
     <p class="file-size-info">Max size = 30MB allowed</p>
+    <a class="cancel-button" th:href="@{'/home'}">Cancel</a>
 </form>
-
-<form action="/home" method="get">
-    <button type="submit" class="cancel-button">Cancel</button>
-</form>
-
 </body>
 </html>

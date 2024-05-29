@@ -1,0 +1,91 @@
+/* Style for the form container */
+#editForm {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+/* Form heading */
+#editForm h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Label styles */
+#editForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Input and textarea styles */
+#editForm input[type="text"],
+#editForm textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Video display */
+#editForm video {
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+/* File input */
+#editForm input[type="file"] {
+    margin-bottom: 20px;
+}
+
+/* Button styles */
+#editForm button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#editForm button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* File size info */
+#editForm .file-size-info {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
+/* Cancel button */
+.cancel-button {
+    display: block;
+    width: 97%;
+    padding: 10px;
+    text-align: center;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.cancel-button:hover {
+    background-color: #da190b;
+}
