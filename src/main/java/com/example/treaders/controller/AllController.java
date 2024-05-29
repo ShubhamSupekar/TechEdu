@@ -10,12 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.treaders.services.UserRepository;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -120,6 +126,9 @@ public class AllController {
     public String UploadVideo(@RequestParam("file") MultipartFile file,
                             @RequestParam("title") String title,
                               @RequestParam("description") String description){
+        if(!UserLoggedIn){
+            return "redirect:/";
+        }
         try {
             // Check if the uploaded file is not empty
             if (file.isEmpty()) {
@@ -141,5 +150,72 @@ public class AllController {
             return "redirect:/uploadForm?error=fileError";
         }
     }
+
+    @GetMapping("/delete/{id}")
+    public String detelePage(@PathVariable("id") int id){
+        if(!UserLoggedIn){
+            return "redirect:/";
+        }
+        try {
+            VideoFormat video = VideoRepo.findById(id).get();
+            Path videoPath = Paths.get("public/Videos/" + video.getFilepath());
+            try {
+                Files.delete(videoPath);
+            } catch (Exception e) {
+                System.out.println("Exception" + e.getMessage());
+            }
+            VideoRepo.deleteById(id);
+        }catch (Exception e){
+            System.out.println("Exception" + e.getMessage());
+        }
+        return "redirect:/home";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String getEditPage(@PathVariable("id") int id, Model model){
+        if(!UserLoggedIn){
+            return "redirect:/";
+        }
+        VideoFormat video = VideoRepo.findById(id).get();
+        model.addAttribute("video", video);
+        return "editPage";
+    }
+
+
+    @PostMapping("/edit/{id}")
+    public String editVideoDetails(@PathVariable("id") int id,
+                                   @RequestParam("title") String title,
+                                   @RequestParam("description") String description,
+                                   @RequestParam("file") MultipartFile file
+                                   ){
+        if(!UserLoggedIn){
+            return "redirect:/";
+        }
+        try {
+            VideoFormat video = VideoRepo.findById(id).get();
+            if (file != null && !file.isEmpty()) {
+                Path OldVideoPath = Paths.get("public/Videos/" + video.getFilepath());
+                try {
+                    Files.delete(OldVideoPath);
+                    String fileName = "_"+file.getOriginalFilename();
+                    video.setFilepath(fileName);
+                    Path uploadPath = Paths.get("public/Videos/");
+                    Path filePath = uploadPath.resolve(fileName);
+                    Files.write(filePath,file.getBytes());
+                } catch (Exception e) {
+                    System.out.println("Exception: " + e.getMessage());
+                }
+            }
+            video.setTitle(title);
+            video.setDescription(description);
+            UserFormat user = UserRepo.findByUsername(UserName);
+            video.setUploadedBy(user);
+            VideoRepo.save(video);
+        }catch (Exception e){
+            System.out.println("Exception: " + e.getMessage());
+        }
+        return "redirect:/home";
+    }
+
 
 }

@@ -39,6 +39,8 @@
             <p class="description" th:text="${video.description}"></p> <!-- Video Description -->
             <p>Uploaded by: <span th:text="${video.uploadedBy.getUsername()}" style="font-style: italic; font-weight: bold;"></span></p><!-- Uploaded by -->
             <p>Uploaded On: <span th:text="${video.uploadedAt.toString().substring(0,10)}" style="font-style: italic; font-weight: bold;"></span></p><!-- Uploaded by -->
+            <a class="delete-button" th:href="@{'/delete/' + ${video.id}}" onclick="return confirm('Are you sure?')">Delete</a>
+            <a class="delete-button" th:href="@{'/edit/' + ${video.id}}">Edit</a>
         </div>
     </div>
 </div>

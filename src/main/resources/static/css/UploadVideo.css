@@ -37,7 +37,7 @@ form label {
 form input[type="text"],
 form textarea,
 form input[type="file"] {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ddd;
@@ -74,14 +74,24 @@ button:hover {
     background-color: #488;
 }
 
-.home-button {
-    background-color: #ccc;
-
+.cancel-button:hover{
+    background-color: #45a049;
 }
 
-.home-button:hover {
-    background-color: #aaa;
+.cancel-button{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #5a9;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
 }
+
 
 .file-size-info {
     text-align: center;
