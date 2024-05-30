@@ -4,6 +4,7 @@ select * from user;
 select * from videos;
 drop table user;
 
+
 INSERT INTO videos (title, description, file_path, uploaded_by)
 VALUES ('AI Index Report', 'Showing measuring treands of AI in 2024', 'Artificial Intelligence Index Report 2024 is Here- Measuring Trends In AI.mp4', 1);
 

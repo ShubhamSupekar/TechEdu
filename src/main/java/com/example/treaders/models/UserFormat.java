@@ -16,6 +16,9 @@ public class UserFormat {
     @Column(nullable = false, length = 250)
     private String password;
 
+    @Column(unique = true, nullable = false, length = 250)
+    private String email;
+
     public int getId() {
         return id;
     }
@@ -38,5 +41,13 @@ public class UserFormat {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

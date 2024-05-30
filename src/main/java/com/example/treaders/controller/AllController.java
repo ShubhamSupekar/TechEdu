@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.treaders.services.UserRepository;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -52,11 +49,11 @@ public class AllController {
 
 
     @PostMapping("/authenticate")
-    public String authenticate(@RequestParam String username, @RequestParam String password){
-        UserFormat user = UserRepo.findByUsername(username);
+    public String authenticate(@RequestParam String email, @RequestParam String password){
+        UserFormat user = UserRepo.findByEmail(email);
         if(user!=null && user.getPassword().equals(password)){
             UserLoggedIn = true;
-            UserName = username;
+            UserName = user.getUsername();
             return "redirect:/home";
         }else{
             return "redirect:/signup";
@@ -80,8 +77,9 @@ public class AllController {
     }
 
     @PostMapping("/newuser")
-    public String addNewUser(@RequestParam String username, @RequestParam String password){
+    public String addNewUser(@RequestParam String email,@RequestParam String username, @RequestParam String password){
         UserFormat user=new UserFormat();
+        user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
         UserRepo.save(user);
@@ -208,14 +206,11 @@ public class AllController {
             }
             video.setTitle(title);
             video.setDescription(description);
-            UserFormat user = UserRepo.findByUsername(UserName);
-            video.setUploadedBy(user);
             VideoRepo.save(video);
         }catch (Exception e){
             System.out.println("Exception: " + e.getMessage());
         }
         return "redirect:/home";
     }
-
 
 }
