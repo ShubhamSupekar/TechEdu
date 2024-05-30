@@ -25,6 +25,18 @@
     </div>
 </div>
 
+<!-- Filter Buttons -->
+<div class="filter-buttons">
+    <form action="/home" method="get">
+        <input type="hidden" name="filter" value="all">
+        <button type="submit">All Videos</button>
+    </form>
+    <form action="/home" method="get">
+        <input type="hidden" name="filter" value="myvideos">
+        <button type="submit">Only My Videos</button>
+    </form>
+</div>
+
 <!-- Grid layout for videos -->
 <div class="video-grid">
     <!-- Iterate over the list of videos -->
@@ -40,8 +52,8 @@
             <p>Uploaded by: <span th:text="${video.uploadedBy.getUsername()}" style="font-style: italic; font-weight: bold;"></span></p><!-- Uploaded by -->
             <p>Uploaded On: <span th:text="${video.uploadedAt.toString().substring(0,10)}" style="font-style: italic; font-weight: bold;"></span></p><!-- Uploaded by -->
 
-            <!-- Dropdown menu for both Delete and Edit -->
-            <div class="dropdown2">
+            <!-- Dropdown menu for both Delete and Edit, shown only if the current user is the uploader -->
+            <div th:if="${username} == ${video.uploadedBy.getUsername()}" class="dropdown2">
                 <button class="dropbtn2">Actions</button>
                 <div class="dropdown-content2">
                     <a th:href="@{'/edit/' + ${video.id}}">Edit</a>

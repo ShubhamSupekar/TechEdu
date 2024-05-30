@@ -61,11 +61,16 @@ public class AllController {
     }
 
     @GetMapping("/home")
-    public String home(Model model){
-        if(UserLoggedIn){
-            List<VideoFormat> videos = VideoRepo.findAll();
+    public String home(@RequestParam(value = "filter", required = false) String filter, Model model) {
+        if (UserLoggedIn) {
+            List<VideoFormat> videos;
+            if ("myvideos".equals(filter)) {
+                videos = VideoRepo.findByUploadedBy_Username(UserName);
+            } else {
+                videos = VideoRepo.findAll();
+            }
             model.addAttribute("videos", videos);
-            model.addAttribute("username", UserName);
+            model.addAttribute("username", UserName); // Add the username to the model
             return "welcome";
         }
         return "redirect:/";

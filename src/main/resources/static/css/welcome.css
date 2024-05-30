@@ -197,3 +197,42 @@ h1 {
 .dropdown2:hover .dropdown-content2 {
     display: block;
 }
+
+/* Styles for the filter buttons container */
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* Base style for filter buttons */
+.filter-buttons form {
+    margin: 0 10px;
+}
+
+.filter-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4caf50; /* Green background */
+    color: white; /* White text */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Hover effect for filter buttons */
+.filter-buttons button:hover {
+    background-color: #45a049; /* Darker green background on hover */
+}
+
+/* Active state for filter buttons */
+.filter-buttons button:active {
+    background-color: #3e8e41; /* Even darker green background on active */
+}
+
+/* Disabled state for filter buttons */
+.filter-buttons button:disabled {
+    background-color: #cccccc; /* Gray background for disabled state */
+    cursor: not-allowed; /* Change cursor to indicate disabled state */
+}
