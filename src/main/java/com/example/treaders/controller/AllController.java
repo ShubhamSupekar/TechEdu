@@ -7,6 +7,7 @@ import com.example.treaders.user.InputForm;
 import com.example.treaders.LLM.LlamaService;
 import com.example.treaders.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,9 @@ public class AllController {
 
     @Autowired
     private UserRepository UserRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private VideoRepository VideoRepo;
@@ -51,7 +55,7 @@ public class AllController {
     @PostMapping("/authenticate")
     public String authenticate(@RequestParam String email, @RequestParam String password){
         UserFormat user = UserRepo.findByEmail(email);
-        if(user!=null && user.getPassword().equals(password)){
+        if(user!=null && passwordEncoder.matches(password,user.getPassword())){
             UserLoggedIn = true;
             UserName = user.getUsername();
             return "redirect:/home";
@@ -86,7 +90,7 @@ public class AllController {
         UserFormat user=new UserFormat();
         user.setEmail(email);
         user.setUsername(username);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         UserRepo.save(user);
         return "redirect:/";
     }
