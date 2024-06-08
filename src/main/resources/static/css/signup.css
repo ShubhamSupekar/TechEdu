@@ -69,3 +69,15 @@ body {
 .login-link a:hover {
     text-decoration: underline;
 }
+
+/* New CSS for Error Message */
+.signup-container .error {
+    color: #d9534f; /* Bootstrap error color */
+    background-color: #f2dede; /* Light red background for error messages */
+    border: 1px solid #ebccd1; /* Border color matching the background */
+    padding: 10px; /* Add some padding */
+    margin-bottom: 20px; /* Space below the error message */
+    border-radius: 5px; /* Slightly rounded corners */
+    font-size: 0.9em; /* Slightly smaller font size */
+    text-align: center; /* Center the error text */
+}

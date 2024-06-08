@@ -23,6 +23,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 
+//Sanjay@123
+
 @Controller
 public class AllController {
 
@@ -86,10 +88,17 @@ public class AllController {
     }
 
     @PostMapping("/newuser")
-    public String addNewUser(@RequestParam String email,@RequestParam String username, @RequestParam String password){
+    public String addNewUser(@RequestParam String email,@RequestParam String username, @RequestParam String password,Model model){
         UserFormat user=new UserFormat();
         user.setEmail(email);
         user.setUsername(username);
+        String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#]).+$";
+        if(!password.matches(regex)){
+            model.addAttribute("errorMessage", "Password must be at least 6 characters long and include at least one capital letter and one special character (@, #, or $).");
+            model.addAttribute("email", email);
+            model.addAttribute("username", username);
+            return "signup";
+        }
         user.setPassword(passwordEncoder.encode(password));
         UserRepo.save(user);
         return "redirect:/";
