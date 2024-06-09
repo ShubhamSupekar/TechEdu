@@ -13,10 +13,11 @@
     <form action="/newuser" method="post" id="signupForm">
       <div class="message"></div>
       <input type="email" name="email" placeholder="Email Id" required>
+      <div th:if="${errorEmailMessage != null}" th:text="${errorEmailMessage}" class="error"></div>
       <input type="text" name="username" placeholder="User Name" required>
       <input type="password" name="password" placeholder="Password" required>
       <!-- Display the error message if there is one -->
-      <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="error"></div>
+      <div th:if="${errorPasswordMessage != null}" th:text="${errorPasswordMessage}" class="error"></div>
       <input type="submit" value="Sign Up">
     </form>
     <p class="login-link">Already have an account? <a href="/">Login</a></p>

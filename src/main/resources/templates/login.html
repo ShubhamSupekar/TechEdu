@@ -12,9 +12,10 @@
     <form action="/authenticate" method="post" id="loginForm">
         <div class="message"></div>
         <input type="text" name="email" placeholder="Email Id" required>
+        <div th:if="${errorEmailMessage != null}" th:text="${errorEmailMessage}" class="error"></div>
         <input type="password" name="password" placeholder="Password" required>
         <!-- Display the error message if there is one -->
-        <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="error"></div>
+        <div th:if="${errorPasswordMessage != null}" th:text="${errorPasswordMessage}" class="error"></div>
         <input type="submit" value="Login">
     </form>
     <p class="signup-text">New user? Sign up <a href="/signup">here</a>.</p>

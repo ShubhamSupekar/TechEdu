@@ -58,7 +58,7 @@ public class AllController {
     public String authenticate(@RequestParam String email, @RequestParam String password,Model model){
         UserFormat user = UserRepo.findByEmail(email);
         if(user == null){
-            model.addAttribute("errorMessage", "User doesn't exist");
+            model.addAttribute("errorEmailMessage", "Email doesn't exist");
             return "login";
         }
         if(user!=null && passwordEncoder.matches(password,user.getPassword())){
@@ -66,7 +66,7 @@ public class AllController {
             UserName = user.getUsername();
             return "redirect:/home";
         }else{
-            model.addAttribute("errorMessage", "Wrong password");
+            model.addAttribute("errorPasswordMessage", "Wrong password");
             return "login";
         }
     }
@@ -96,14 +96,14 @@ public class AllController {
     public String addNewUser(@RequestParam String email,@RequestParam String username, @RequestParam String password,Model model){
         UserFormat user=new UserFormat();
         if(UserRepo.findByEmail(email)!=null){
-            model.addAttribute("errorMessage","This email already exists");
+            model.addAttribute("errorEmailMessage","This email already exists");
             return "signup";
         }
         user.setEmail(email);
         user.setUsername(username);
         String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#]).+$";
         if(!password.matches(regex)){
-            model.addAttribute("errorMessage", "Password must be at least 6 characters long and include at least one capital letter and one special character (@, #, or $).");
+            model.addAttribute("errorPasswordMessage", "Password must be at least 6 characters long and include at least one capital letter and one special character (@, #, or $).");
             model.addAttribute("email", email);
             model.addAttribute("username", username);
             return "signup";
