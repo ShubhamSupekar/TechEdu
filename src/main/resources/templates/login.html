@@ -13,6 +13,8 @@
         <div class="message"></div>
         <input type="text" name="email" placeholder="Email Id" required>
         <input type="password" name="password" placeholder="Password" required>
+        <!-- Display the error message if there is one -->
+        <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="error"></div>
         <input type="submit" value="Login">
     </form>
     <p class="signup-text">New user? Sign up <a href="/signup">here</a>.</p>

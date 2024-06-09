@@ -55,14 +55,19 @@ public class AllController {
 
 
     @PostMapping("/authenticate")
-    public String authenticate(@RequestParam String email, @RequestParam String password){
+    public String authenticate(@RequestParam String email, @RequestParam String password,Model model){
         UserFormat user = UserRepo.findByEmail(email);
+        if(user == null){
+            model.addAttribute("errorMessage", "User doesn't exist");
+            return "login";
+        }
         if(user!=null && passwordEncoder.matches(password,user.getPassword())){
             UserLoggedIn = true;
             UserName = user.getUsername();
             return "redirect:/home";
         }else{
-            return "redirect:/signup";
+            model.addAttribute("errorMessage", "Wrong password");
+            return "login";
         }
     }
 
@@ -90,6 +95,10 @@ public class AllController {
     @PostMapping("/newuser")
     public String addNewUser(@RequestParam String email,@RequestParam String username, @RequestParam String password,Model model){
         UserFormat user=new UserFormat();
+        if(UserRepo.findByEmail(email)!=null){
+            model.addAttribute("errorMessage","This email already exists");
+            return "signup";
+        }
         user.setEmail(email);
         user.setUsername(username);
         String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#]).+$";
