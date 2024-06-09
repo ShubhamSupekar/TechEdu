@@ -101,8 +101,8 @@ body {
 /* Home button styling */
 .home-button {
     position: absolute;
-    top: 150px; /* Adjust as needed */
-    right: 470px; /* Adjust as needed */
+    top: 120px; /* Adjust as needed */
+    right: 400px; /* Adjust as needed */
     padding: 10px 20px;
     font-size: 16px;
     background-color: #444;

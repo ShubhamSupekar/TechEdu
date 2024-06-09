@@ -3,7 +3,6 @@ package com.example.treaders.controller;
 import com.example.treaders.models.VideoFormat;
 import com.example.treaders.models.UserFormat;
 import com.example.treaders.services.VideoRepository;
-import com.example.treaders.user.InputForm;
 import com.example.treaders.LLM.LlamaService;
 import com.example.treaders.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -17,7 +17,7 @@ public class SecurityConfig{
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/**").permitAll())
                 .formLogin(form -> form.loginPage("/"))
-                .logout(logout -> logout.logoutUrl("/logout"))
+                .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/"))
                 .csrf(csrf -> csrf.disable());
 
         return http.build();
