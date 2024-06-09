@@ -122,20 +122,10 @@ public class AllController {
     }
 
     @GetMapping("/chat")
-    public String index(Model model) {
+    public String showChatPage() {
         if(!UserLoggedIn){
             return "redirect:/";
         }
-        model.addAttribute("inputForm", new InputForm());
-        return "ChatPage";
-    }
-
-    @PostMapping("/chat")
-    public String processString(InputForm inputForm,Model model) {
-        String userInput = inputForm.getInputString();
-        String llamaResponse = llamaService.getResponse(userInput); // Get the response from Llama
-        inputForm.setResponseString(llamaResponse); // Set the response in the inputForm
-        model.addAttribute("inputForm", inputForm); // Update the model with the inputForm containing the response
         return "ChatPage";
     }
 

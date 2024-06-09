@@ -1,35 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Chat</title>
+    <title>Ask anything to  LLAMA3</title>
     <link rel="stylesheet" type="text/css" href="/css/ChatPage.css">
 </head>
 <body>
-<div class="container">
-    <h1>Ask anything to Llama</h1>
-
-    <!-- Loading screen -->
-    <div class="loading-screen" id="loadingScreen">Loading...</div>
-
-    <form action="#" th:action="@{/chat}" th:object="${inputForm}" method="post" class="input-container" onsubmit="showLoadingScreen()">
-        <input type="text" th:field="*{inputString}" placeholder="Type your question here..." />
-        <button type="submit">Submit</button>
-    </form>
-
-    <div th:if="${inputForm.responseString != null}" class="output-container">
-        <div class="output-text" th:text="${inputForm.responseString}"></div>
+<div id="chat-container">
+    <div id="chat-box">
+        <h1>Welcome to chat with LLAMA3</h1>
+        <a href="/home" class="home-button">Home</a>
+        <!-- Form to get the user's question -->
+        <form id="question-form" action="/stream-chat" method="get">
+            <input type="text" id="question-input" name="question" placeholder="Type your question here" required>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="response-container"></div>
+        <button id="stop-button">Stop Streaming</button>
     </div>
-
-    <!-- Home button -->
-    <a href="/home" class="home-button">Home</a>
 </div>
-
-<script>
-    function showLoadingScreen() {
-        document.getElementById("loadingScreen").style.display = "block"; // Show the loading screen
-    }
-</script>
-
+<script src="/js/ChatPage.js"></script>
 </body>
 </html>
