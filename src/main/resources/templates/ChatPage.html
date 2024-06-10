@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Ask anything to  LLAMA3</title>
+    <title>Ask anything to LLAMA3</title>
     <link rel="stylesheet" type="text/css" href="/css/ChatPage.css">
 </head>
 <body>
 <div id="chat-container">
     <div id="chat-box">
         <h1>Welcome to chat with LLAMA3</h1>
-        <a href="/home" class="home-button">Home</a>
         <!-- Form to get the user's question -->
         <form id="question-form" action="/stream-chat" method="get">
             <input type="text" id="question-input" name="question" placeholder="Type your question here" required>
             <button type="submit">Submit</button>
+            <a href="/home" class="home-button">Home</a>
         </form>
         <div id="response-container"></div>
         <button id="stop-button">Stop Streaming</button>
