@@ -5,24 +5,20 @@ import com.example.treaders.models.UserFormat;
 import com.example.treaders.services.VideoRepository;
 import com.example.treaders.LLM.LlamaService;
 import com.example.treaders.services.VideoService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.treaders.services.UserRepository;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
-
-//Sanjay@123
 
 @Controller
 public class AllController {
@@ -39,155 +35,139 @@ public class AllController {
     @Autowired
     private LlamaService llamaService;
 
-    private boolean UserLoggedIn = false;
-
-    private String UserName;
-
     @Autowired
     private VideoService videoService;
 
-
     @GetMapping("/")
-    public String Login(){
+    public String login() {
         return "login";
     }
 
-
     @PostMapping("/authenticate")
-    public String authenticate(@RequestParam String email, @RequestParam String password,Model model){
+    public String authenticate(@RequestParam String email, @RequestParam String password, Model model, HttpSession session) {
         UserFormat user = UserRepo.findByEmail(email);
-        if(user == null){
+        if (user == null) {
             model.addAttribute("errorEmailMessage", "Email doesn't exist");
             return "login";
         }
-        if(user!=null && passwordEncoder.matches(password,user.getPassword())){
-            UserLoggedIn = true;
-            UserName = user.getUsername();
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            session.setAttribute("username", user.getUsername());
             return "redirect:/home";
-        }else{
+        } else {
             model.addAttribute("errorPasswordMessage", "Wrong password");
             return "login";
         }
     }
 
     @GetMapping("/home")
-    public String home(@RequestParam(value = "filter", required = false) String filter, Model model) {
-        if (UserLoggedIn) {
+    public String home(@RequestParam(value = "filter", required = false) String filter, Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
             List<VideoFormat> videos;
             if ("myvideos".equals(filter)) {
-                videos = VideoRepo.findByUploadedBy_Username(UserName);
+                videos = VideoRepo.findByUploadedBy_Username(username);
             } else {
                 videos = VideoRepo.findAll();
             }
             model.addAttribute("videos", videos);
-            model.addAttribute("username", UserName); // Add the username to the model
+            model.addAttribute("username", username);
             return "welcome";
         }
         return "redirect:/";
     }
 
     @GetMapping("/signup")
-    public String Signup(){
+    public String signup() {
         return "signup";
     }
 
     @PostMapping("/newuser")
-    public String addNewUser(@RequestParam String email,@RequestParam String username, @RequestParam String password,Model model){
-        UserFormat user=new UserFormat();
-        if(UserRepo.findByEmail(email)!=null){
-            model.addAttribute("errorEmailMessage","This email already exists");
+    public String addNewUser(@RequestParam String email, @RequestParam String username, @RequestParam String password, Model model) {
+        if (UserRepo.findByEmail(email) != null) {
+            model.addAttribute("errorEmailMessage", "This email already exists");
             return "signup";
         }
-        user.setEmail(email);
-        user.setUsername(username);
         String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#]).+$";
-        if(!password.matches(regex)){
+        if (!password.matches(regex)) {
             model.addAttribute("errorPasswordMessage", "Password must be at least 6 characters long and include at least one capital letter and one special character (@, #, or $).");
             model.addAttribute("email", email);
             model.addAttribute("username", username);
             return "signup";
         }
+        UserFormat user = new UserFormat();
+        user.setEmail(email);
+        user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         UserRepo.save(user);
         return "redirect:/";
     }
 
-
     @PostMapping("/logout")
-    public String logout(){
-        UserLoggedIn = false;
-        UserName = "";
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "redirect:/";
     }
 
     @GetMapping("/chat")
-    public String showChatPage() {
-        if(!UserLoggedIn){
+    public String showChatPage(HttpSession session) {
+        if (session.getAttribute("username") == null) {
             return "redirect:/";
         }
         return "ChatPage";
     }
 
     @GetMapping("/upload")
-    public String getUploadVideoFormat(){
-        if(!UserLoggedIn){
+    public String getUploadVideoFormat(HttpSession session) {
+        if (session.getAttribute("username") == null) {
             return "redirect:/";
         }
         return "UploadVideo";
     }
 
     @PostMapping("/upload")
-    public String UploadVideo(@RequestParam("file") MultipartFile file,
-                            @RequestParam("title") String title,
-                              @RequestParam("description") String description){
-        if(!UserLoggedIn){
+    public String uploadVideo(@RequestParam("file") MultipartFile file,
+                              @RequestParam("title") String title,
+                              @RequestParam("description") String description,
+                              HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
             return "redirect:/";
         }
         try {
-            // Check if the uploaded file is not empty
             if (file.isEmpty()) {
                 return "redirect:/uploadForm?error=fileEmpty";
             }
-
-            // Validate the file type (optional)
             if (!file.getContentType().startsWith("video/")) {
                 return "redirect:/uploadForm?error=invalidFileType";
             }
-
-            // Save the video
-            videoService.saveVideo(file, title, description,UserName);
-
-            // Redirect to a success page
+            videoService.saveVideo(file, title, description, username);
             return "redirect:/home";
         } catch (IOException e) {
-            // Handle file I/O errors
             return "redirect:/uploadForm?error=fileError";
         }
     }
 
     @GetMapping("/delete/{id}")
-    public String detelePage(@PathVariable("id") int id){
-        if(!UserLoggedIn){
+    public String deletePage(@PathVariable("id") int id, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
             return "redirect:/";
         }
         try {
             VideoFormat video = VideoRepo.findById(id).get();
             Path videoPath = Paths.get("public/Videos/" + video.getFilepath());
-            try {
-                Files.delete(videoPath);
-            } catch (Exception e) {
-                System.out.println("Exception" + e.getMessage());
-            }
+            Files.deleteIfExists(videoPath);
             VideoRepo.deleteById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Exception" + e.getMessage());
         }
         return "redirect:/home";
     }
 
     @GetMapping("/edit/{id}")
-    public String getEditPage(@PathVariable("id") int id, Model model){
-        if(!UserLoggedIn){
+    public String getEditPage(@PathVariable("id") int id, Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
             return "redirect:/";
         }
         VideoFormat video = VideoRepo.findById(id).get();
@@ -195,38 +175,33 @@ public class AllController {
         return "editPage";
     }
 
-
     @PostMapping("/edit/{id}")
     public String editVideoDetails(@PathVariable("id") int id,
                                    @RequestParam("title") String title,
                                    @RequestParam("description") String description,
-                                   @RequestParam("file") MultipartFile file
-                                   ){
-        if(!UserLoggedIn){
+                                   @RequestParam("file") MultipartFile file,
+                                   HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
             return "redirect:/";
         }
         try {
             VideoFormat video = VideoRepo.findById(id).get();
             if (file != null && !file.isEmpty()) {
-                Path OldVideoPath = Paths.get("public/Videos/" + video.getFilepath());
-                try {
-                    Files.delete(OldVideoPath);
-                    String fileName = "_"+file.getOriginalFilename();
-                    video.setFilepath(fileName);
-                    Path uploadPath = Paths.get("public/Videos/");
-                    Path filePath = uploadPath.resolve(fileName);
-                    Files.write(filePath,file.getBytes());
-                } catch (Exception e) {
-                    System.out.println("Exception: " + e.getMessage());
-                }
+                Path oldVideoPath = Paths.get("public/Videos/" + video.getFilepath());
+                Files.deleteIfExists(oldVideoPath);
+                String fileName = "_" + file.getOriginalFilename();
+                video.setFilepath(fileName);
+                Path uploadPath = Paths.get("public/Videos/");
+                Path filePath = uploadPath.resolve(fileName);
+                Files.write(filePath, file.getBytes());
             }
             video.setTitle(title);
             video.setDescription(description);
             VideoRepo.save(video);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
         }
         return "redirect:/home";
     }
-
 }
