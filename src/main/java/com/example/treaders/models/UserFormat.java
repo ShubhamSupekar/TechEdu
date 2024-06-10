@@ -19,6 +19,17 @@ public class UserFormat {
     @Column(unique = true, nullable = false, length = 250)
     private String email;
 
+    @Column(nullable = false, length = 250)
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public int getId() {
         return id;
     }

@@ -4,6 +4,9 @@ select * from user;
 select * from videos;
 drop table user;
 
+UPDATE videos SET uploaded_by = 11 WHERE uploaded_by = 4;
+
+update user set role = "user" where id = 11;
 
 INSERT INTO videos (title, description, file_path, uploaded_by)
 VALUES ('AI Index Report', 'Showing measuring treands of AI in 2024', 'Artificial Intelligence Index Report 2024 is Here- Measuring Trends In AI.mp4', 1);
@@ -20,7 +23,7 @@ VALUES ('Starting', 'Starting an Generative AI series', 'videoplayback.mp4', 1);
 
 UPDATE videos SET uploaded_by = 2 WHERE id = 9;
 
-
+delete from user where id=4;
 
 DELETE FROM videos WHERE id = 23;
 

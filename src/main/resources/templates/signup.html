@@ -15,6 +15,7 @@
       <input type="email" name="email" placeholder="Email Id" required>
       <div th:if="${errorEmailMessage != null}" th:text="${errorEmailMessage}" class="error"></div>
       <input type="text" name="username" placeholder="User Name" required>
+      <div th:if="${errorUsernameMessage != null}" th:text="${errorUsernameMessage}" class="error"></div>
       <input type="password" name="password" placeholder="Password" required>
       <!-- Display the error message if there is one -->
       <div th:if="${errorPasswordMessage != null}" th:text="${errorPasswordMessage}" class="error"></div>

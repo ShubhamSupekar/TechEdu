@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="/css/welcome.css">
+</head>
+<body>
+
+<h1>TechEdu</h1>
+
+<div class="user-dropdown">
+    <button class="dropbtn">Welcome, <span th:text="${username}">first name</span></button>
+    <div class="dropdown-content">
+        <form action="/logout" method="post">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+        <form action="/chat" method="get">
+            <button type="submit" class="chat-button">Chat With Llama3</button>
+        </form>
+        <form action="/upload" method="get">
+            <button type="submit" class="upload-button">Upload Videos</button>
+        </form>
+    </div>
+</div>
+
+<!-- Grid layout for videos -->
+<div class="video-grid">
+    <!-- Iterate over the list of videos -->
+    <div th:each="video : ${videos}">
+        <div class="video-item">
+            <h3><a th:href="@{'/Videos/' + ${video.filepath}}" th:text="${video.title}"></a></h3> <!-- Video Title -->
+            <video width="280" height="auto" controls>
+                <!-- Set the source of the video to the relative path of the video -->
+                <source th:src="@{'/Videos/' + ${video.filepath}}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p class="description" th:text="${video.description}"></p> <!-- Video Description -->
+            <p>Uploaded by:
+                <a th:href="@{'/user/' + ${video.uploadedBy.getUsername()}}"
+                   th:text="${video.uploadedBy.getUsername()}"
+                   style="font-style: italic; font-weight: bold;">
+                </a>
+            </p><!-- Uploaded by -->
+            <p>Uploaded On: <span th:text="${video.uploadedAt.toString().substring(0,10)}" style="font-style: italic; font-weight: bold;"></span></p><!-- Uploaded by -->
+
+            <!-- Dropdown menu for both Delete and Edit -->
+            <div class="dropdown2">
+                <button class="dropbtn2">Actions</button>
+                <div class="dropdown-content2">
+                    <a th:href="@{'/edit/' + ${video.id}}">Edit</a>
+                    <a th:href="@{'/delete/' + ${video.id}}" onclick="return confirm('Are you sure?')">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

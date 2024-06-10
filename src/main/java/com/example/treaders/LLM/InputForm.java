@@ -1,4 +1,4 @@
-package com.example.treaders.user;
+package com.example.treaders.LLM;
 
 import org.springframework.stereotype.Repository;
 

@@ -51,7 +51,12 @@ public class AllController {
             return "login";
         }
         if (passwordEncoder.matches(password, user.getPassword())) {
-            session.setAttribute("username", user.getUsername());
+            if(user.getRole().matches("admin")){
+                session.setAttribute("username", "admin");
+                return "redirect:/adhome";
+            }else{
+                session.setAttribute("username", user.getUsername());
+            }
             return "redirect:/home";
         } else {
             model.addAttribute("errorPasswordMessage", "Wrong password");
@@ -62,6 +67,9 @@ public class AllController {
     @GetMapping("/home")
     public String home(@RequestParam(value = "filter", required = false) String filter, Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
+        if(username.matches("admin")){
+            return "redirect:/adhome";
+        }
         if (username != null) {
             List<VideoFormat> videos;
             if ("myvideos".equals(filter)) {
@@ -92,6 +100,14 @@ public class AllController {
             model.addAttribute("errorPasswordMessage", "Password must be at least 6 characters long and include at least one capital letter and one special character (@, #, or $).");
             model.addAttribute("email", email);
             model.addAttribute("username", username);
+            return "signup";
+        }
+        if(username.matches("admin")) {
+            model.addAttribute("errorUsernameMessage", "Can't choose username as admin");
+            return "signup";
+        }
+        if(UserRepo.findByUsername(username) != null) {
+            model.addAttribute("errorUsernameMessage", "This username already exists");
             return "signup";
         }
         UserFormat user = new UserFormat();
@@ -203,5 +219,30 @@ public class AllController {
             System.out.println("Exception: " + e.getMessage());
         }
         return "redirect:/home";
+    }
+
+
+
+    @GetMapping("/adhome")
+    public String adhome( Model model, HttpSession session){
+        String username = (String) session.getAttribute("username");
+        if(!username.matches("admin")){
+            return"redirect:/logout";
+        }
+        List<VideoFormat> videos=VideoRepo.findAll();
+        model.addAttribute("videos", videos);
+        model.addAttribute("username", username);
+        return "adminWelcome";
+    }
+
+    @GetMapping("/user/{name}")
+    public String allUsers(@PathVariable("name") String name,Model model, HttpSession session){
+        String username = (String) session.getAttribute("username");
+        if(!username.matches("admin")){
+            return"redirect:/logout";
+        }
+        model.addAttribute("username",name);
+        model.addAttribute("videos",VideoRepo.findByUploadedBy_Username(name));
+        return "UserVideo";
     }
 }

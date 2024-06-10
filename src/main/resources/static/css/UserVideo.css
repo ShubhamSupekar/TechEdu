@@ -1,0 +1,159 @@
+/* Set background color to black and text color to white */
+body {
+    background-color: #000;
+    color: #fff; /* Set text color to white */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Style for the Home button */
+.home-btn {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove default border */
+    color: white; /* White text */
+    padding: 15px 32px; /* Padding for size */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Display inline */
+    font-size: 16px; /* Font size */
+    margin: 10px 0; /* Margin around the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for Home button */
+.home-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Focus and active states for better accessibility */
+.home-btn:focus, .home-btn:active {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.5); /* Custom focus ring */
+}
+
+/* Ensure proper alignment of the Home button */
+.home-button {
+    text-align: center; /* Center the button within the container */
+    margin: 20px 0; /* Add margin to space it out from other elements */
+}
+
+/* Style for the username heading */
+.username-heading {
+    text-align: center; /* Center the heading */
+    font-size: 24px; /* Font size for the heading */
+    margin: 20px 0; /* Margin around the heading */
+    color: #FFFFFF; /* White text color for contrast */
+    background-color: #333333; /* Dark background for visibility */
+    padding: 10px 20px; /* Padding around the text */
+    border-radius: 8px; /* Rounded corners for the heading */
+    display: inline-block; /* Ensure it only takes necessary space */
+}
+
+/* Ensure the container of the username heading is centered */
+.username-heading-container {
+    text-align: center; /* Center the heading within its container */
+    margin: 20px 0; /* Add margin to space it out from other elements */
+}
+
+/* Grid layout for videos */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+/* Style for individual video items */
+.video-item {
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #1a1a1a; /* Slightly lighter black for video item background */
+    height: auto; /* Flexible height based on content */
+    display: flex;
+    flex-direction: column;
+}
+
+.video-item h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.video-item h3 a {
+    color: #fff; /* White text for links */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.video-item h3 a:hover {
+    color: #ccc; /* Light gray text on hover */
+}
+
+.video-item video {
+    max-width: 100%;
+    margin-bottom: 10px;
+}
+
+.video-item p {
+    margin-top: 10px;
+    color: #ccc; /* Light grey text */
+}
+
+/* Style for video descriptions */
+.video-item .description {
+    flex-grow: 1;
+    overflow: auto;
+    margin-top: 10px;
+}
+
+/* Style for uploaded by text */
+.video-item p span {
+    color: #fff; /* White text for uploader name */
+}
+
+/* Dropdown container */
+.dropdown2 {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown button */
+.dropbtn2 {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content2 {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content2 a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content2 a:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown2:hover .dropdown-content2 {
+    display: block;
+}
