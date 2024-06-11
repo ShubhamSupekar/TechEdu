@@ -1,0 +1,114 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e; /* Dark background */
+    color: #ffffff; /* White text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #2c2c2c; /* Slightly lighter background for the container */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffcc00; /* Gold color for the title */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Table Styles */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.user-table th, .user-table td {
+    border: 1px solid #444; /* Darker border */
+    padding: 10px; /* Slightly larger padding */
+    text-align: center;
+}
+
+.user-table th {
+    background-color: #333; /* Dark header background */
+    font-weight: bold;
+}
+
+.user-table tr:nth-child(even) {
+    background-color: #3a3a3a; /* Darker even row background */
+}
+
+.user-table tr:hover {
+    background-color: #575757; /* Highlight on hover */
+}
+
+/* Dropdown Styles */
+.role-dropdown {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #666; /* Darker border for dropdown */
+    border-radius: 4px;
+    background-color: #444; /* Dark background for dropdown */
+    color: #fff; /* White text for dropdown */
+}
+
+/* Dropdown arrow color */
+.role-dropdown::-ms-expand {
+    background: #444; /* Internet Explorer */
+}
+
+.role-dropdown::-webkit-scrollbar {
+    width: 10px;
+}
+
+.role-dropdown::-webkit-scrollbar-thumb {
+    background: #666; /* Darker scrollbar thumb */
+    border-radius: 5px;
+}
+
+.role-dropdown::-webkit-scrollbar-track {
+    background: #2c2c2c; /* Darker scrollbar track */
+}
+
+/* Form Button Styles */
+button {
+    background-color: #ffcc00; /* Gold button background */
+    color: #1e1e1e; /* Dark text color */
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+button:hover {
+    background-color: #ff9900; /* Darker gold on hover */
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 5px #ffcc00; /* Gold focus outline */
+}

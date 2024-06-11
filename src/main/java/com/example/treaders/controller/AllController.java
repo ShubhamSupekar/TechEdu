@@ -3,7 +3,6 @@ package com.example.treaders.controller;
 import com.example.treaders.models.VideoFormat;
 import com.example.treaders.models.UserFormat;
 import com.example.treaders.services.VideoRepository;
-import com.example.treaders.LLM.LlamaService;
 import com.example.treaders.services.VideoService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +32,6 @@ public class AllController {
     private VideoRepository VideoRepo;
 
     @Autowired
-    private LlamaService llamaService;
-
-    @Autowired
     private VideoService videoService;
 
     @GetMapping("/")
@@ -52,7 +48,7 @@ public class AllController {
         }
         if (passwordEncoder.matches(password, user.getPassword())) {
             if(user.getRole().matches("admin")){
-                session.setAttribute("username", "admin");
+                session.setAttribute("username", user.getUsername());
                 return "redirect:/adhome";
             }else{
                 session.setAttribute("username", user.getUsername());
@@ -67,8 +63,9 @@ public class AllController {
     @GetMapping("/home")
     public String home(@RequestParam(value = "filter", required = false) String filter, Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
-        if(username.matches("admin")){
-            return "redirect:/adhome";
+        UserFormat user = UserRepo.findByUsername(username);
+        if(user.getRole().matches("admin")){
+            return"redirect:/adhome";
         }
         if (username != null) {
             List<VideoFormat> videos;
@@ -114,6 +111,7 @@ public class AllController {
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
+        user.setRole("user");
         UserRepo.save(user);
         return "redirect:/";
     }
@@ -226,7 +224,8 @@ public class AllController {
     @GetMapping("/adhome")
     public String adhome( Model model, HttpSession session){
         String username = (String) session.getAttribute("username");
-        if(!username.matches("admin")){
+        UserFormat user = UserRepo.findByUsername(username);
+        if(!user.getRole().matches("admin")){
             return"redirect:/logout";
         }
         List<VideoFormat> videos=VideoRepo.findAll();
@@ -236,13 +235,47 @@ public class AllController {
     }
 
     @GetMapping("/user/{name}")
-    public String allUsers(@PathVariable("name") String name,Model model, HttpSession session){
+    public String VideosOfUser(@PathVariable("name") String name,Model model, HttpSession session){
         String username = (String) session.getAttribute("username");
-        if(!username.matches("admin")){
+        UserFormat user = UserRepo.findByUsername(username);
+        if(!user.getRole().matches("admin")){
             return"redirect:/logout";
         }
         model.addAttribute("username",name);
         model.addAttribute("videos",VideoRepo.findByUploadedBy_Username(name));
         return "UserVideo";
     }
+
+    @GetMapping("/access")
+    public String ControlUserAccess(Model model, HttpSession session){
+        String username = (String) session.getAttribute("username");
+        UserFormat user = UserRepo.findByUsername(username);
+        if(!user.getRole().matches("admin")){
+            return"redirect:/logout";
+        }
+        List<UserFormat> users = UserRepo.findAll();
+        model.addAttribute("users", users);
+        return "UserAccess";
+    }
+
+    @PostMapping("/changeRole")
+    public String changeUserRole(@RequestParam("userId") int userId, @RequestParam("newRole") String newRole,HttpSession session,Model model) {
+
+        String username = (String) session.getAttribute("username");
+        UserFormat users = UserRepo.findByUsername(username);
+        if(!users.getRole().matches("admin")){
+            return"redirect:/logout";
+        }
+
+        // Fetch the user by ID
+        UserFormat user = UserRepo.findById(userId).get();
+        if (user!=null) {
+            // Update the user's role
+            user.setRole(newRole);
+            UserRepo.save(user);
+            // Save the updated user object
+        }
+        return "redirect:/access"; // Redirect back to the access management page
+    }
+
 }

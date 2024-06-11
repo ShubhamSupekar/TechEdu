@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Access</title>
+    <link rel="stylesheet" href="/css/UserAccess.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+<div class="container">
+    <h1>User Access Management</h1>
+    <button onclick="window.location.href='/adhome'">Go to Admin Home</button>
+    <table class="user-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Assuming users is a list of user objects passed from the controller -->
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.username}">username</td>
+            <td th:text="${user.email}">email@example.com</td>
+            <td>
+                <!-- Form to change user role -->
+                <form action="/changeRole" method="post" style="display:inline;">
+                    <input type="hidden" name="userId" th:value="${user.id}">
+                    <select name="newRole" class="role-dropdown" onchange="this.form.submit()">
+                        <option th:value="${user.role}" th:text="${user.role}" selected>Role</option>
+                        <option th:if="${!user.role.matches('admin')}" value="admin">admin</option>
+                        <option th:if="${!user.role.matches('user')} and ${user.id}!=1" value="user">user</option>
+                        <!-- Add other roles as needed -->
+                    </select>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${Message != null}" th:text="${Message}" class="message"></div>
+</div>
+</body>
+</html>
