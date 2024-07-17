@@ -1,5 +1,4 @@
 package com.example.treaders.controller;
-
 import com.example.treaders.models.VideoFormat;
 import com.example.treaders.models.UserFormat;
 import com.example.treaders.services.VideoRepository;
@@ -277,5 +276,4 @@ public class AllController {
         }
         return "redirect:/access"; // Redirect back to the access management page
     }
-
 }
